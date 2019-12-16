@@ -1,0 +1,14 @@
+body{
+  margin: 0;
+  background-color: #0c2033;
+  color: aliceblue;
+}
+
+.todo-container{
+  width: 100%;
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+}
