@@ -13,3 +13,30 @@ body{
   display: flex;
   justify-content: center;
 }
+
+/* filter */
+.filter-div{
+  padding: 1em;
+}
+.filter-div button{
+  padding: 0.3em;
+  margin: 0.5em;
+  cursor: pointer;
+}
+/* li */
+.todo-li{
+  cursor: pointer;
+  padding: 0.5em;
+  margin: 0.2em;
+  font-size: 2em;
+}
+
+/* Color Change */
+
+.complited{
+  text-decoration: line-through;
+  opacity: 0.4;
+}
+.active{
+  text-decoration: underline;
+}
