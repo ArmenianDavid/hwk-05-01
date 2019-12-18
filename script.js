@@ -1,39 +1,40 @@
 const addTodoListButton = document.querySelector("#add-btn");
 const todoOl = document.querySelectorAll(".todo-list")[0];
 const todoLi = document.getElementsByClassName("todo-li");
-const filterActiveTodoBtn = document.getElementById('filterActiveTodoBtn');
-const filterComplitedTodoBtn = document.getElementById('filterComplitedTodoBtn');
-const filterAllTodosBtn = document.getElementById('allTodos');
+const filterActiveTodoBtn = document.getElementById("filterActiveTodoBtn");
+const filterComplitedTodoBtn = document.getElementById("filterComplitedTodoBtn");
+const filterAllTodosBtn = document.getElementById("allTodos");
 const liColection = [];
+let array = [];
+localStorage.setItem('liColection', JSON.stringify(liColection))
 // clears html before new render
 const clearTodoHtml = () => {
   todoOl.innerHTML = "";
 };
 // is creating li for each todo element
-const createTodoList = todoList => {
-  todoList.forEach(todo => {
-    const li = document.createElement("li");
-    li.innerText = todo;
-    li.classList.add("todo-li",'active');
-    liColection.push(li)
-    todoOl.appendChild(li);
-  });
+const createTodoList = input => {
+  const li = document.createElement("li");
+  li.innerText = input;
+  li.classList.add("todo-li", "active");
+  liColection.push(li);
+  todoOl.appendChild(li);
+  array.push(`${input}`);
+  localStorage.setItem('liColection', JSON.stringify([array]))
+  console.log(JSON.parse(localStorage.getItem('liColection')))
 };
 // renders Html
-const renderList = todoList => {
+const renderList = input => {
   // clearTodoHtml()
-  createTodoList(todoList);
+  createTodoList(input);
 };
 // Event on add button it takes input and gives to list
 // then clears html and renders new array items
 addTodoListButton.addEventListener("click", () => {
-  const todoList = [];
   const todoInput = document.querySelector("#input");
   if (todoInput.value == false) {
     return "";
   }
-  todoList.push(todoInput.value);
-  renderList(todoList);
+  renderList(todoInput.value);
 });
 
 todoOl.addEventListener("click", event => {
@@ -51,46 +52,31 @@ todoOl.addEventListener("click", event => {
   }
 });
 
-filterActiveTodoBtn.addEventListener( 'click' , ()=>{
+filterActiveTodoBtn.addEventListener("click", () => {
   clearTodoHtml();
-   const complitedTodos = liColection.filter( item =>{
-     return item.classList[1] === 'active'
-   })
-   console.log(complitedTodos)
-   const complited = complitedTodos.map( item => item.innerText)
-   complited.forEach(todo => {
-    const li = document.createElement("li");
-    li.innerText = todo;
-    li.classList.add("todo-li",'active');
-    todoOl.appendChild(li);
-  })
-})
+  const activeTodos = liColection.filter(item => {
+    return item.classList[1] === "active";
+  });
+  console.log(activeTodos);
+  activeTodos.forEach(todo => {
+    todoOl.appendChild(todo);
+  });
+});
 
-filterComplitedTodoBtn.addEventListener( 'click' , ()=>{
+filterComplitedTodoBtn.addEventListener("click", () => {
   clearTodoHtml();
-   const complitedTodos = liColection.filter( item =>{
-     return item.classList[1] === 'complited'
-   })
-   console.log(complitedTodos)
-   const complited = complitedTodos.map( item => item.innerText)
-   complited.forEach(todo => {
-    const li = document.createElement("li");
-    li.innerText = todo;
-    li.classList.add("todo-li",'complited');
-    console.log(liColection)
-    todoOl.appendChild(li);
-  })
-})
+  const complitedTodos = liColection.filter(item => {
+    return item.classList[1] === "complited";
+  });
+  complitedTodos.forEach(todo => {
+    todoOl.appendChild(todo);
+  });
+});
 
-filterAllTodosBtn.addEventListener('click' , () =>{
-  clearTodoHtml()
-  console.log(liColection)
-  liColection.forEach( item => {
-    const li = document.createElement("li");
-    li.innerText = item.innerText;
-    li.classList.add(item.classList[0]);
-    li.classList.add(item.classList[1]);
-    todoOl.appendChild(li);
-    console.log(liColection)
-  })
-})
+filterAllTodosBtn.addEventListener("click", () => {
+  clearTodoHtml();
+  liColection.forEach(item => {
+    todoOl.appendChild(item);
+    console.log(localStorage)
+  });
+});
