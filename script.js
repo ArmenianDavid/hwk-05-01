@@ -21,19 +21,22 @@ const clearTodoHtml = () => {
 
 // is creating li for each todo element
 const createTodoList = input => {
-  itemsArray.push(input);
-  console.log(itemsArray);
-  localStorage.setItem("items", JSON.stringify(itemsArray));
-  console.log(localStorage.items);
-  data = JSON.parse(localStorage.getItem("items"));
-  console.log(data);
-
   const li = document.createElement("li");
   li.innerText = input;
   li.classList.add("todo-li", "active");
   liColection.push(li);
   todoOl.appendChild(li);
   console.log(liColection);
+
+  classNameArray = liColection.map(li => li.classList[1]);
+  console.log(classNameArray);
+  itemsArray.push({ input: input, classState: classNameArray });
+  console.log(liColection);
+  console.log(itemsArray);
+  localStorage.setItem("items", JSON.stringify(itemsArray));
+  console.log(localStorage.items);
+  data = JSON.parse(localStorage.getItem("items"));
+  console.log(data);
 };
 
 // renders Html
@@ -96,13 +99,16 @@ filterAllTodosBtn.addEventListener("click", () => {
 });
 
 const render = data => {
-  data.forEach(dataInputed => {
+  console.log(data);
+  let classData = data[data.length - 1];
+  console.log(classData);
+  data.forEach((dataInputed, index) => {
     const li = document.createElement("li");
-    li.innerText = dataInputed;
-    li.classList.add("todo-li", "active");
+    li.innerText = dataInputed.input;
+    li.classList.add("todo-li", classData.classState[index]);
     liColection.push(li);
     todoOl.appendChild(li);
-    console.log(liColection);
+    console.log(li);
   });
 };
 render(data);
