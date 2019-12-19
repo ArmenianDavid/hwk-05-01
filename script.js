@@ -7,117 +7,88 @@ const filterComplitedTodoBtn = document.getElementById(
 );
 const filterAllTodosBtn = document.getElementById("allTodos");
 const clearAll = document.getElementById("clearAll");
-
-let itemsArray = localStorage.getItem("items")
+// it was imposible write const because of event clearAll
+let arrayOfLiIngredients = localStorage.getItem("items")
   ? JSON.parse(localStorage.getItem("items"))
   : [];
-localStorage.setItem("items", JSON.stringify(itemsArray));
-let data = JSON.parse(localStorage.getItem("items"));
-let liColection = [];
 // clears html before new render
 const clearTodoHtml = () => {
   todoOl.innerHTML = "";
 };
-
-// is creating li for each todo element
+// is creating an object from input and class and pushes to array
 const createTodoList = input => {
-  const li = document.createElement("li");
-  li.innerText = input;
-  li.classList.add("todo-li", "active");
-  liColection.push(li);
-  todoOl.appendChild(li);
-  console.log(liColection);
-
-  classNameArray = liColection.map(li => li.classList[1]);
-  console.log(classNameArray);
-  itemsArray.push({ input: input, classState: classNameArray });
-  console.log(liColection);
-  console.log(itemsArray);
-  localStorage.setItem("items", JSON.stringify(itemsArray));
-  console.log(localStorage.items);
-  data = JSON.parse(localStorage.getItem("items"));
-  console.log(data);
+  arrayOfLiIngredients.push({
+    input: input,
+    class1: "todo-li",
+    class2: "active"
+  });
+  renderLi(arrayOfLiIngredients);
 };
-
-// renders Html
-const renderList = input => {
-  createTodoList(input);
-};
-
-// Event on add button it takes input and gives to list
-// then clears html and renders new array items
+// Event on add button it takes input and validates givs it to crate to do list
 addTodoListButton.addEventListener("click", () => {
   const todoInput = document.querySelector("#input");
   if (todoInput.value == false) {
     return "";
   }
-  renderList(todoInput.value);
+  createTodoList(todoInput.value);
+  localStorage.setItem("items", JSON.stringify(arrayOfLiIngredients));
 });
-
+// event on Ordered list takes event target id and changes in my array item with that index
 todoOl.addEventListener("click", event => {
   // if empty string dont do anything
   if (event.target.classList.contains("todo-list")) {
     return "";
   }
-
-  if (event.target.classList.contains("complited")) {
-    event.target.classList.remove("complited");
-    event.target.classList.add("active");
+  if (arrayOfLiIngredients[event.target.id].class2 === "active") {
+    arrayOfLiIngredients[event.target.id].class2 = "complited";
   } else {
-    event.target.classList.remove("active");
-    event.target.classList.add("complited");
+    arrayOfLiIngredients[event.target.id].class2 = "active";
   }
+  renderLi(arrayOfLiIngredients);
+  localStorage.setItem("items", JSON.stringify(arrayOfLiIngredients));
 });
-
+// filters objects who has class active from array and calls render for them
 filterActiveTodoBtn.addEventListener("click", () => {
   clearTodoHtml();
-  const activeTodos = liColection.filter(item => {
-    return item.classList[1] === "active";
+  const activeIngredients = arrayOfLiIngredients.filter(item => {
+    return item.class2 === "active";
   });
-  console.log(activeTodos);
-  activeTodos.forEach(todo => {
-    todoOl.appendChild(todo);
-  });
+  if (activeIngredients == false) {
+    return (todoOl.textContent = "No active todos");
+  }
+  renderLi(activeIngredients);
 });
-
+// filters objects who has class Complited from array and calls render for them
 filterComplitedTodoBtn.addEventListener("click", () => {
   clearTodoHtml();
-  const complitedTodos = liColection.filter(item => {
-    return item.classList[1] === "complited";
+  const complitedIngredients = arrayOfLiIngredients.filter(item => {
+    return item.class2 === "complited";
   });
-  complitedTodos.forEach(todo => {
-    todoOl.appendChild(todo);
-  });
+  if (complitedIngredients == false) {
+    return (todoOl.textContent = "No complited todos");
+  }
+  renderLi(complitedIngredients);
 });
-
+// filters ALL objects  from array and calls render for them
 filterAllTodosBtn.addEventListener("click", () => {
   clearTodoHtml();
-  liColection.forEach(item => {
-    todoOl.appendChild(item);
-    console.log(localStorage);
-  });
+  renderLi(arrayOfLiIngredients);
 });
-
-const render = data => {
-  console.log(data);
-  let classData = data[data.length - 1];
-  console.log(classData);
-  data.forEach((dataInputed, index) => {
+// renders given array of objects making them to <li>
+renderLi = arrayOfLiIngredients => {
+  todoOl.innerHTML = "";
+  arrayOfLiIngredients.forEach((item, index) => {
     const li = document.createElement("li");
-    li.innerText = dataInputed.input;
-    li.classList.add("todo-li", classData.classState[index]);
-    liColection.push(li);
+    li.classList.add(item.class1, item.class2);
+    li.id = index;
+    li.textContent = item.input;
     todoOl.appendChild(li);
-    console.log(li);
   });
 };
-render(data);
-
+renderLi(arrayOfLiIngredients);
 // Clear all todos and localStorage
-
 clearAll.addEventListener("click", () => {
   localStorage.clear();
   clearTodoHtml();
-  liColection = [];
-  itemsArray = [];
+  arrayOfLiIngredients = [];
 });

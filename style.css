@@ -3,23 +3,39 @@ body{
   background-color: #0c2033;
   color: aliceblue;
   font-size: 16px;
+  min-width: 320px;
 }
-
+button{
+  cursor: pointer;
+}
 .todo-container{
   width: 100%;
 }
-
+/* INPUT AND PLUSS */
 .center{
   display: flex;
   justify-content: center;
 }
+.center input{
+  font-size: 2em;
+}
+.center .add-todo{
+  padding: 0.8em;
+}
+.center .add-todo:hover{
+  background-color: grey;
+  border-radius: 5px;
+}
 
 /* filter */
 .filter-div{
+  display: flex;
+  justify-content: center;
   padding: 1em;
 }
 .filter-div button{
-  padding: 0.3em;
+  width: 8em;
+  padding: 0.5em;
   margin: 0.5em;
   cursor: pointer;
 }
@@ -30,13 +46,50 @@ body{
   margin: 0.2em;
   font-size: 2em;
 }
-
+.todo-li:hover{
+  font-weight: 700;
+  transition: 0.2s ease;
+}
 /* Color Change */
 
+.complited::after{
+  content: ' -- DONE';
+  color: Red;
+  text-decoration: none;
+  font-size: 1.2em;
+  border-radius: 5px;
+}
 .complited{
-  text-decoration: line-through;
   opacity: 0.4;
+  color: gray;
 }
 .active{
   text-decoration: underline;
+}
+
+/* Animation */
+
+
+
+/* Media */
+@media  only screen and (max-width: 700px){
+  .filter-div{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  padding: 1em;
+  }
+  .todo-li{
+    cursor: pointer;
+    padding: 0.4em;
+    margin: 0.1em;
+    font-size: 1.5em;
+  }
+  .center input{
+    font-size: 1.2em;
+  }
+  .center .add-todo{
+    padding: 0.3em;
+  }
 }

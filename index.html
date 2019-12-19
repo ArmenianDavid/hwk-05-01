@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel='stylesheet' href="./style.css" />
+  <link rel='stylesheet' href="./buttons.css" />
   <title>Document</title>
 </head>
 <body>
@@ -18,21 +19,42 @@
               <button id='add-btn' class="add-todo">&#10133;</i></button>
           </div>
           <div class="center filter-div">
-            <button id='filterActiveTodoBtn'>Active</button>
-            <button id='filterComplitedTodoBtn'>Complited</button>
-            <button id='allTodos'>All</button>
-            <button id='clearAll'>Clear</button>
+            <div>
+              <button  class='btn' id='filterActiveTodoBtn'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Active</button>
+              <button class='btn' id='filterComplitedTodoBtn'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Complited</button>
+            </div>
+            <div>
+              <button class='btn' id='allTodos'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    All</button>
+              <button class='btn' id='clearAll'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    Clear</button >
+            </div>
           </div>
           <div class="todo">
               <ol class="todo-list"> 
                  
               </ol>
           </div>
-          
       </div>
   </div>
-
-  
 <script src="./script.js"></script>
 </body>
 </html>
